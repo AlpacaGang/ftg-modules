@@ -54,8 +54,7 @@ async def tiny_pic_spam(e):
     counter = int(text[1])
     link = str(text[2])
     await e.delete()
-    for i in range(1, counter):
-        await e.client.send_file(e.chat_id, link)
+    await asyncio.wait([e.client.send_file(e.chat_id, link) for i in range(counter)])
     if BOTLOG:
         await e.client.send_message(
             BOTLOG_CHATID, "#PICSPAM\n"
