@@ -242,7 +242,7 @@ class Tralka(loader.Module):
         self._client = client
         self._me = await client.get_me()
 
-    async def pastecmd(self, message):
+    async def tralkacmd(self, message):
         """.tralka <word_count> <caps_rate (in %)> <recepient name>"""
         args = utils.get_args(message)
         chatid = str(message.chat_id)
