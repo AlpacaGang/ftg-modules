@@ -20,10 +20,6 @@ class WAITMod(loader.Module):
     def config_complete(self):
         self.name = self.strings["name"]
 
-    async def client_ready(self, client, db):
-        self._db = db
-        self._me = await client.get_me()
-
     async def wait5cmd(self, message):
         """Эта команда удаляет сообхение черезе 5 секунд"""
         await utils.answer(message, "Через 5 секунд это сообщение удалится")
