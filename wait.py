@@ -43,3 +43,7 @@ class WAITMod(loader.Module):
                 await message.delete()
             except:
                 await utils.answer(message, "Вы указали не число!")
+    
+    async def tagcmd(self, message):
+        """Эта команда для троллинга друзей. \nЕй вы можете тегнуть друга, а сообщение само удалится!"""
+        await message.delete()
