@@ -16,6 +16,13 @@ class WAITMod(loader.Module):
     """Provides a message saying that you are unavailable"""
     strings = {"name": "wait",
                "fuck": "FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK"}
+    
+    def config_complete(self):
+        self.name = self.strings["name"]
+
+    async def client_ready(self, client, db):
+        self._db = db
+        self._me = await client.get_me()
 
     async def wait5cmd(self, message):
         """Эта команда удаляет сообхение черезе 5 секунд"""
