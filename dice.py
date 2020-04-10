@@ -9,13 +9,13 @@ logger = logging.getLogger(__name__)
 
 
 def register(cb):
-    cb(WAITMod())
+    cb(DICEMod())
 
 
 @loader.tds
-class WAITMod(loader.Module):
+class DICEMod(loader.Module):
     """Кто читает тот гей"""
-    strings = {"name": "wait"}
+    strings = {"name": "dice"}
 
     def __init__(self):
         self.name = self.strings["name"]
