@@ -4,6 +4,7 @@ import logging
 import datetime
 import time
 import asyncio
+from datetime import*
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ class WAITMod(loader.Module):
         await message.delete()
 
     async def waitcmd(self, message):
-        """Эта команда удаляет сообхение черезе n секунд, \nписать нужно так: .wait n"""
+        """Эта команда удаляет сообхение через n секунд, \nписать нужно так: .wait n"""
         args = utils.get_args(message)
         if not args or len(args) > 1:
             await utils.answer(message, "Вы не указали число секунд или указали несколько параметров")
@@ -42,10 +43,12 @@ class WAITMod(loader.Module):
             try:
                 x = int(args[0])
                 await utils.answer(message, "Через " + str(x) + " секунд это сообщение удалится")
+                
+                dd = time.time()
 
-                for i in range(x - 1, -1, -1):
+                while time.time() - dd < x:
                     await asyncio.sleep(1)
-                    await utils.answer(message, "Через " + str(i) + " секунд это сообщение удалится")
+                    await utils.answer(message, "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится")
                 await message.delete()
             except:
                 await utils.answer(message, "Вы указали не число!")
