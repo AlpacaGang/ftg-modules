@@ -39,21 +39,21 @@ class WAITMod(loader.Module):
         if not args or len(args) > 1:
             await utils.answer(message, "Вы не указали число секунд или указали несколько параметров")
         else:
-            try:
-                try:
-                    g = int(args[0])
-                except:
-                    await utils.answer(message, "Вы указали не число!")
-                x = int(args[0])
-                await utils.answer(message, "Через " + str(x) + " секунд это сообщение удалится")
-
-                dd = time.time()
-
-                while time.time() - dd < x:
-                    await utils.answer(message, "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится")
-                await message.delete()
-            except:
-                await utils.answer(message, "Упс, ошибочка вышла! Напшите @gerasikoff, он вам поможет")
+#             try:
+#                 try:
+#                     g = int(args[0])
+#                 except:
+#                     await utils.answer(message, "Вы указали не число!")
+            x = int(args[0])
+            await utils.answer(message, "Через " + str(x) + " секунд это сообщение удалится")
+            
+            dd = time.time()
+            
+            while time.time() - dd < x:
+                await utils.answer(message, "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится")
+            await message.delete()
+#             except:
+#                 await utils.answer(message, "Упс, ошибочка вышла! Напшите @gerasikoff, он вам поможет")
 
     async def tagcmd(self, message):
         """Эта команда для троллинга друзей. \nЕй вы можете тегнуть друга, а сообщение само удалится!"""
