@@ -15,7 +15,7 @@ def register(cb):
 @loader.tds
 class DICEMod(loader.Module):
     """Кто читает тот гей"""
-    strings = {"name": "dice"}
+    strings = {"name": "ЖУЖАКА НАХУЙ"}
 
     def __init__(self):
         self.name = self.strings["name"]
@@ -23,7 +23,7 @@ class DICEMod(loader.Module):
     def config_complete(self):
         pass
 
-    async def dicecmd(self, message):
+    async def 🎲cmd(self, message):
         """Эта команда для того чтобы кинуть кубик и получить случайное значение от 1 до 6"""
         await message.delete()
-        await self.send_message(message, "🎲")
+        await self.send_message(message, "Ты зачем жужаку вызвал?")
