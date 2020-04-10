@@ -1,3 +1,4 @@
+# fuck python the encoding: utf-8
 from .. import loader, utils
 
 import logging
