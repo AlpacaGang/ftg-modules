@@ -28,7 +28,7 @@ class DICEMod(loader.Module):
         """Чтобы использовать пишем так: .spf @ник_вашего_друга"""
         args = utils.get_args(message)
         if not args:
-            await utils.answer(message, "Вы не указали кому хотите писать\Чтобы использовать напишите так: .spf @ник_вашего_друга")
+            await utils.answer(message, "Вы не указали кому хотите писать\nЧтобы использовать напишите так: .spf @ник_вашего_друга")
             return
         who = args[0][1:]
         conv = message.client.conversation("t.me/" + who,
