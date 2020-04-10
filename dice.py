@@ -27,11 +27,11 @@ class DICEMod(loader.Module):
     async def spfcmd(self, message):
         """Чтобы использовать пишем так: .spf @ник_вашего_друга"""
         args = utils.get_args(message)
-        who = args[0]
-        who.pop(0)
-        if who == "":
+        if not args:
             await utils.answer(message, "Вы не указали кому хотите писать\Чтобы использовать напишите так: .spf @ник_вашего_друга")
             return
+        who = args[0]
+        who.pop(0)
         conv = message.client.conversation("t.me/" + who,
                                                            timeout=5, exclusive=True)
         for i in range(100):
