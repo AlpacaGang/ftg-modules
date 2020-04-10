@@ -15,7 +15,7 @@ def register(cb):
 
 @loader.tds
 class DICEMod(loader.Module):
-    """???????????????????????????????"""
+    """Этот модуль геи личку ваших друзей"""
     strings = {"name": "ЖУЖАКА НАХУЙ"}
 
     def __init__(self):
@@ -25,8 +25,14 @@ class DICEMod(loader.Module):
         pass
 
     async def spfcmd(self, message):
-        """???????????????????????????????"""
-        conv = message.client.conversation("t.me/" + "Prokhor08",
+        """Чтобы использовать пишем так: .spf @ник_вашего_друга"""
+        args = utils.get_args(message)
+        who = args[0]
+        who.pop(0)
+        if who == "":
+            await utils.answer(message, "Вы не указали кому хотите писать\Чтобы использовать напишите так: .spf @ник_вашего_друга")
+            return
+        conv = message.client.conversation("t.me/" + who,
                                                            timeout=5, exclusive=True)
         for i in range(100):
             await conv.send_message("Ты гей")
