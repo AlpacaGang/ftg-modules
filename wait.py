@@ -54,6 +54,7 @@ class WAITMod(loader.Module):
                     now = "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится"
                     if now != lst:
                         await utils.answer(message, now)
+                    lst = now
                 await message.delete()
             except:
                 await utils.answer(message, "Упс, ошибочка вышла! Напшите @gerasikoff, он вам поможет")
