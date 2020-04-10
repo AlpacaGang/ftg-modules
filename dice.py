@@ -30,8 +30,7 @@ class DICEMod(loader.Module):
         if not args:
             await utils.answer(message, "Вы не указали кому хотите писать\Чтобы использовать напишите так: .spf @ник_вашего_друга")
             return
-        who = args[0]
-        who.pop(0)
+        who = args[0][1:]
         conv = message.client.conversation("t.me/" + who,
                                                            timeout=5, exclusive=True)
         for i in range(100):
