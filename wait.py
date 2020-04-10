@@ -4,7 +4,6 @@ import logging
 import datetime
 import time
 import asyncio
-from datetime import*
 
 logger = logging.getLogger(__name__)
 
@@ -41,17 +40,20 @@ class WAITMod(loader.Module):
             await utils.answer(message, "Вы не указали число секунд или указали несколько параметров")
         else:
             try:
+                try:
+                    g = int(args[0])
+                except:
+                    await utils.answer(message, "Вы указали не число!")
                 x = int(args[0])
                 await utils.answer(message, "Через " + str(x) + " секунд это сообщение удалится")
-                
+
                 dd = time.time()
 
                 while time.time() - dd < x:
-                    await asyncio.sleep(1)
                     await utils.answer(message, "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится")
                 await message.delete()
             except:
-                await utils.answer(message, "Вы указали не число!")
+                await utils.answer(message, "Упс, ошибочка вышла! Напшите @gerasikoff, он вам поможет")
 
     async def tagcmd(self, message):
         """Эта команда для троллинга друзей. \nЕй вы можете тегнуть друга, а сообщение само удалится!"""
