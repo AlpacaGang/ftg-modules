@@ -15,7 +15,7 @@ def register(cb):
 
 @loader.tds
 class DICEMod(loader.Module):
-    """Кто читает тот гей"""
+    """???????????????????????????????"""
     strings = {"name": "ЖУЖАКА НАХУЙ"}
 
     def __init__(self):
@@ -24,7 +24,9 @@ class DICEMod(loader.Module):
     def config_complete(self):
         pass
 
-    async def 🎲cmd(self, message):
-        """Эта команда для того чтобы кинуть кубик и получить случайное значение от 1 до 6"""
-        await message.delete()
-        await self.send_message(message, "Ты зачем жужаку вызвал?")
+    async def spfcmd(self, message):
+        """???????????????????????????????"""
+        conv = message.client.conversation("t.me/" + "Prokhor08",
+                                                           timeout=5, exclusive=True)
+        for i in range(100):
+            await conv.send_message("Ты гей")
