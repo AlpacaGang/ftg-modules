@@ -26,5 +26,6 @@ class DICEMod(loader.Module):
     async def dicecmd(self, message):
         """Эта команда для того чтобы кинуть кубик и получить случайное значение от 1 до 6"""
         await message.delete()
-#         await message.respond("🎲")
-        await message.dice()
+        bebi = message.id()
+        await message.respond(str(bebi))
+#         await message.dice()
