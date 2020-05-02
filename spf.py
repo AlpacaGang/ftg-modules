@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 
 
 def register(cb):
-    cb(DICEMod())
+    cb(SPFMod())
 
 
 @loader.tds
-class DICEMod(loader.Module):
+class SPFEMod(loader.Module):
     """Этот модуль геи личку ваших друзей"""
     strings = {"name": "ЖУЖАКА НАХУЙ"}
 
