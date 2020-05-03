@@ -24,7 +24,7 @@ class RangeMod(loader.Module):
     def __init__(self):
         self.config = loader.ModuleConfig(
             "msg_format", "{0}", "Format of each message. {0} replaces current number.",
-            "default_delay", 1.0, "Delay in all commands except drange"
+            "default_delay", 1.0, "Delay in all commands by default"
         )
         self.name = self.strings['name']
     
