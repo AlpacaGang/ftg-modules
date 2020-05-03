@@ -11,7 +11,7 @@ import os
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
-DOGBIN_URL = "https://del.dog/"
+DOGBIN_URL = "https://dogbin.f0x1d.com/"
 
 
 @register(outgoing=True, pattern=r"^.paste(?: |$)([\s\S]*)")
@@ -125,7 +125,7 @@ async def get_dogbin_content(dog_url):
 CMD_HELP.update({
     "dogbin":
     ".paste <text/reply>\
-\nUsage: Create a paste or a shortened url using dogbin (https://del.dog/)\
+\nUsage: Create a paste or a shortened url using dogbin (https://dogbin.f0x1d.com/)\
 \n\n.getpaste\
-\nUsage: Gets the content of a paste or shortened url from dogbin (https://del.dog/)"
+\nUsage: Gets the content of a paste or shortened url from dogbin (https://dogbin.f0x1d.com/)"
 })
