@@ -221,7 +221,9 @@ def generate(word_count: int, caps_rate: int, name: str):
     return ' '.join(res) + '.'
 # КТО ПРОЧИТАЛ ТОТ ЗДОХНЕТ
 
-
+def register(cb):
+     cb(Tralka())
+     
 logger = logging.getLogger(__name__)
 
 
@@ -229,7 +231,7 @@ logger = logging.getLogger(__name__)
 class Tralka(loader.Module):
     """Generates pastes"""
     strings = {}
-
+     
     async def tralkacmd(self, message):
         """.tralka <word_count> <caps_rate (in %)> <recepient name>"""
         args = utils.get_args(message)
