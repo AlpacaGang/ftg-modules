@@ -222,11 +222,11 @@ def generate(word_count: int, caps_rate: int, name: str):
 # КТО ПРОЧИТАЛ ТОТ ЗДОХНЕТ
 
 def register(cb):
-     cb(Tralka())
+     cb(TralkaMod())
 
 
 @loader.tds
-class Tralka(loader.Module):
+class TralkaMod(loader.Module):
     """Generates pastes"""
     strings = {"name": "Tralka"}
      
@@ -237,7 +237,6 @@ class Tralka(loader.Module):
     async def tralkacmd(self, message):
         """.tralka <word_count> <caps_rate (in %)> <recepient name>"""
         args = utils.get_args(message)
-        chatid = str(message.chat_id)
         if len(args) < 2:
             await utils.answer(message, "Not enough arguments")
         elif len(args) == 2:
