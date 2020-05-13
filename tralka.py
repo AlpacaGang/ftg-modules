@@ -230,8 +230,11 @@ logger = logging.getLogger(__name__)
 @loader.tds
 class Tralka(loader.Module):
     """Generates pastes"""
-    strings = {}
+    strings = {"name": "Tralka"}
      
+    def __init__(self):
+        self.name = self.strings['name']
+          
     async def tralkacmd(self, message):
         """.tralka <word_count> <caps_rate (in %)> <recepient name>"""
         args = utils.get_args(message)
