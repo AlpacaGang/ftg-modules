@@ -4,6 +4,8 @@ from .. import loader, utils
 import logging
 import random
 
+logger = logging.getLogger(__name__)
+
 version = 4.8
 sentence_min = 3
 sentence_max = 10
@@ -223,8 +225,6 @@ def generate(word_count: int, caps_rate: int, name: str):
 
 def register(cb):
      cb(Tralka())
-     
-logger = logging.getLogger(__name__)
 
 
 @loader.tds
