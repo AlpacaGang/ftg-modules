@@ -233,7 +233,7 @@ class Tralka(loader.Module):
     """Generates pastes"""
 
     def __init__(self):
-        self.name = _("Pastes")
+        self.name = "Pastes"
         self._me = None
         self._ratelimit = []
 
