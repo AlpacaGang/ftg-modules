@@ -225,22 +225,9 @@ def generate(word_count: int, caps_rate: int, name: str):
 logger = logging.getLogger(__name__)
 
 
-def register(cb):
-    cb(Tralka())
-
-
+@loader.tds
 class Tralka(loader.Module):
     """Generates pastes"""
-
-    def __init__(self):
-        self.name = "Pastes"
-        self._me = None
-        self._ratelimit = []
-
-    async def client_ready(self, client, db):
-        self._db = db
-        self._client = client
-        self._me = await client.get_me()
 
     async def tralkacmd(self, message):
         """.tralka <word_count> <caps_rate (in %)> <recepient name>"""
