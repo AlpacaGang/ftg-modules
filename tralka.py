@@ -1,5 +1,3 @@
-# -*- coding: future_fstrings -*-
-
 from .. import loader, utils
 import logging
 import random
@@ -233,6 +231,7 @@ class Tralka(loader.Module):
     strings = {"name": "Tralka"}
      
     def __init__(self):
+        self.config = loader.ModuleConfig()
         self.name = self.strings['name']
           
     async def tralkacmd(self, message):
