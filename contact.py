@@ -23,7 +23,7 @@ class CONTACTMod(loader.Module):
     def config_complete(self):
         pass
 
-    async def contactmd(self, message):
+    async def contactcmd(self, message):
         """Эта команда пишет 10 сообщений для контакта"""
         try:
             await message.delete()
