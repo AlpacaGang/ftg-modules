@@ -9,14 +9,14 @@ from .. import loader, utils
 
 class Student:
     def __init__(self, id: int, last_name: str, first_name: str, 
-                    patronymic: str, grade: int, region: str, academ: bool):
+                    patronymic: str, grade: int, region: str, academ: bool, approved: int=None):
         self.last_name = last_name
         self.first_name = first_name
         self.patronymic = patronymic
         self.grade = int(grade)
         self.region = region
         self.academ = bool(academ)
-        self.approved = None
+        self.approved = approved
         self.id = int(id)
     
     def __str__(self):
@@ -61,6 +61,7 @@ class SiriusMod(loader.Module):
         msg = [f'{len(users)} всего', '==']
         for user in users:
             del user['_id']
+            del user['approved
             s = Student(**user)
             msg += [str(s), '==']
         msg = msg[:-1]
