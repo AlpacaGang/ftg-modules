@@ -27,6 +27,7 @@ class Student:
 
 class SiriusMod(loader.Module):
     """Ищем поступивших на ИЮ2020"""
+    strings = {"name": "Sirius"}
     def __init__(self):
         self.config = loader.ModuleConfig(
             # name - default - description
@@ -34,7 +35,7 @@ class SiriusMod(loader.Module):
             "db_db", None, "database",
             "db_coll", None, "collection"
         )
-        self.name = 'sirius'
+        self.name = self.strings['name']
         self.db = None
     
     def config_complete(self):
