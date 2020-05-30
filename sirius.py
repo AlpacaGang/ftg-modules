@@ -43,6 +43,7 @@ class SiriusMod(loader.Module):
 
     async def findcmd(self, message):
         arg = ' '.join(utils.get_args_raw(message)).strip()
+        logger.debug('Got: %s', arg)
         if not arg:
             await utils.answer(message, 'Только 1 аргумент - номер в списке или фамилия/имя')
         if arg.isdigit():
