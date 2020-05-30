@@ -55,7 +55,7 @@ class SiriusMod(loader.Module):
                 if user['region'].lower() == arg.lower():
                     users.append(user)
         else:
-            users = list(self.db.find({'$or': [{"last_name": arg}, {"first_name": arg}, {"patronymic": arg}]))
+            users = list(self.db.find({'$or': [{"last_name": arg}, {"first_name": arg}, {"patronymic": arg}]}))
 
         msg = [f'{len(users)} всего', '==']
         for user in users:
