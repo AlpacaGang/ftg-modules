@@ -1,4 +1,5 @@
 # requires: pymongo dnspython
+
 # Забейте
 import asyncio
 import pymongo
