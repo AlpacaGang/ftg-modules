@@ -23,7 +23,7 @@ class Student:
         p = 'Академ' if self.academ else 'Отбор'
         # a = f'Уже вроде бы добавлен в чат (tg://user?id={self.approved})' if self.approved else 'Еще нет в чате'
         return f'[{p}.{self.id}] {self.last_name} {self.first_name} {self.patronymic}, '\
-        '{self.grade} класс, из {self.region}s'
+        f'{self.grade} класс, из {self.region}'
 
 class SiriusMod(loader.Module):
     """Ищем поступивших на ИЮ2020"""
