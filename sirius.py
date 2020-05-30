@@ -60,6 +60,7 @@ class SiriusMod(loader.Module):
 
         msg = [f'{len(users)} всего', '==']
         for user in users:
+            del user['_id']
             s = Student(**user)
             msg += [str(s), '==']
         msg = msg[:-1]
