@@ -45,22 +45,28 @@ class SiriusMod(loader.Module):
 
     async def findcmd(self, message):
         arg = utils.get_args_raw(message).strip()
+        arg = arg.replace('ё', 'е')
+        arg = arg.replace('Ё', 'Е')
         logger.debug('Got: %s', arg)
         if not arg:
             await utils.answer(message, 'Только 1 аргумент - номер в списке или фамилия/имя')
         if arg.isdigit():
+            add = f'людей с номером {arg}'
             arg = int(arg)
             users = list(self.db.find({"id": arg}))
         elif ' ' in arg or arg.lower() == 'янао': # Костыли костыли
+            add = f'людей из региона {arg}'
             _users = list(self.db.find())
             users = []
             for user in _users:
                 if user['region'].lower() == arg.lower():
                     users.append(user)
         else:
+            add = f'людей, которых зовут {arg}'
+            arg = arg.capitalize()
             users = list(self.db.find({'$or': [{"last_name": arg}, {"first_name": arg}, {"patronymic": arg}]}))
 
-        msg = [f'{len(users)} всего', '==']
+        msg = [f'{len(users)} всего {add}', '==']
         for user in users:
             del user['_id']
             s = Student(**user)
