@@ -34,7 +34,8 @@ class SiriusMod(loader.Module):
             # name - default - description
             "db_uri", None, "Database URI, if you dont know where to take it - nevermind",
             "db_db", None, "database",
-            "db_coll", None, "collection"
+            "db_coll", None, "collection",
+            "replace_ё", True, "replace ё with е in requests, incorrect usage may return incorrect result"
         )
         self.name = self.strings['name']
         self.db = None
@@ -45,8 +46,9 @@ class SiriusMod(loader.Module):
 
     async def findcmd(self, message):
         arg = utils.get_args_raw(message).strip()
-        arg = arg.replace('ё', 'е')
-        arg = arg.replace('Ё', 'Е')
+        if self.config['replace_ё']:
+            arg = arg.replace('ё', 'е')
+            arg = arg.replace('Ё', 'Е')
         logger.debug('Got: %s', arg)
         if not arg:
             await utils.answer(message, 'Только 1 аргумент - номер в списке или фамилия/имя')
