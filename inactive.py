@@ -40,7 +40,7 @@ class InactiveDetectorMod(loader.Module):
                 await utils.answer(message, self.strings("not_int", message))
         else:
             most = 0
-        users = self.db.get(__name__, chat_id, {})
+        users = self.db.get(__name__, str(chat_id), {})
 
         def key(x):
             return x[1]['cnt']
@@ -63,7 +63,7 @@ class InactiveDetectorMod(loader.Module):
         if message.is_private:
             return
         else:
-            chat_id = message.chat_id
+            chat_id = str(message.chat_id)
         users = self.db.get(__name__, chat_id, {})
         from_id = message.from_id
         # this creates user if not exists
