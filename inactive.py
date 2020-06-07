@@ -38,6 +38,7 @@ class InactiveDetectorMod(loader.Module):
                 most = int(args[0])
             else:
                 await utils.answer(message, self.strings("not_int", message))
+                return
         else:
             most = 0
         users = self.db.get(__name__, str(chat_id), {})
