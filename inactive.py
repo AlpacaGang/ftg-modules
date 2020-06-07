@@ -40,7 +40,7 @@ class InactiveDetectorMod(loader.Module):
                 await utils.answer(message, self.strings("not_int", message))
         else:
             most = 0
-        users = self.db.get(__name__, chat_id, [])
+        users = self.db.get(__name__, chat_id, {})
         users.sort()
         text = []
         for uid in users:
@@ -61,7 +61,7 @@ class InactiveDetectorMod(loader.Module):
             return
         else:
             chat_id = message.chat_id
-        users = self.db.get(__name__, chat_id, [])
+        users = self.db.get(__name__, chat_id, {})
         from_id = message.from_id
         # this creates user if not exists
         users[from_id] = users.get(from_id,
