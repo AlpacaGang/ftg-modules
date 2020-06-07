@@ -1,6 +1,6 @@
 import logging
 
-from .. import loader, utils  # noqa: F401
+from .. import loader, utils
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ class InactiveDetectorMod(loader.Module):
         msg = self.strings('top_header', message).format(un=len(text), mn=most)\
             + self.strings('top_delimiter', message).join(text)
 
-        await utils.answer(message, msg, parse_mode="MarkdownV2")
+        await utils.answer(message, msg, parse_mode="md")
 
     async def watcher(self, message):
         if message.is_private:
