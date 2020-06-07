@@ -27,7 +27,7 @@ class InactiveDetectorMod(loader.Module):
         self.db = db
 
     async def inactivecmd(self, message):
-        """.inactive """
+        """.inactive <N>"""
         if message.is_private:
             chat_id = self.config['default_chat_id']
         else:
@@ -65,7 +65,7 @@ class InactiveDetectorMod(loader.Module):
         else:
             chat_id = str(message.chat_id)
         users = self.db.get(__name__, chat_id, {})
-        from_id = message.from_id
+        from_id = str(message.from_id)
         # this creates user if not exists
         users[from_id] = users.get(from_id,
                                    {"cnt": 0,
