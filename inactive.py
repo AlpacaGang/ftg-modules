@@ -51,7 +51,7 @@ class InactiveDetectorMod(loader.Module):
                 ))
             else:
                 break
-        msg = self.strings('top_header', message)\
+        msg = self.strings('top_header', message).format(un=len(text), mn=most)\
             + self.strings('top_delimiter', message).join(text)
 
         await utils.answer(message, msg)
@@ -61,7 +61,7 @@ class InactiveDetectorMod(loader.Module):
             return
         else:
             chat_id = message.chat_id
-        users = self.db.get(__name__, chat_id)
+        users = self.db.get(__name__, chat_id, [])
         from_id = message.from_id
         # this creates user if not exists
         users[from_id] = users.get(from_id,
@@ -69,3 +69,4 @@ class InactiveDetectorMod(loader.Module):
                                     "name": message.sender.first_name + ' '
                                     + message.sender.last_name})
         users[from_id]["cnt"] += 1
+        self.db.set(__name__, chat_id, users)
