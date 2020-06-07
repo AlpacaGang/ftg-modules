@@ -41,7 +41,11 @@ class InactiveDetectorMod(loader.Module):
         else:
             most = 0
         users = self.db.get(__name__, chat_id, {})
-        users.sort()
+
+        def key(x):
+            return x[1]['cnt']
+
+        users = dict(sorted(users.items(), key=key))
         text = []
         for uid in users:
             u = users[uid]
