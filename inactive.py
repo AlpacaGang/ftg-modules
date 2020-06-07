@@ -45,10 +45,9 @@ class InactiveDetectorMod(loader.Module):
         def key(x):
             return x[1]['cnt']
 
-        users = dict(sorted(users.items(), key=key))
+        users = sorted(users.items(), key=key)
         text = []
-        for uid in users:
-            u = users[uid]
+        for uid, u in users:
             if u['cnt'] <= most:
                 text.append(self.strings('top_place', message).format(
                     name=u['name'], uid=uid, nmsg=u['cnt']
