@@ -31,7 +31,7 @@ class InactiveDetectorMod(loader.Module):
         if message.is_private:
             chat_id = self.config['default_chat_id']
         else:
-            chat_id = message.chat.id
+            chat_id = message.chat_id
         args = utils.get_args(message)
         if args:
             if args[0].isdigit():
