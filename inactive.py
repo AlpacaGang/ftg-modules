@@ -46,7 +46,7 @@ class InactiveDetectorMod(loader.Module):
         users = {}
 
         async for user in self.client.iter_participants(chat_id):
-            if not user.is_bot:
+            if not user.bot:
                 if str(user.id) not in users_db:
                     users_db[str(user.id)] = self.get_empty_user(user)
                 users[str(user.id)] = users_db[str(user.id)]
@@ -80,9 +80,10 @@ class InactiveDetectorMod(loader.Module):
         users = self.db.get(__name__, chat_id, {})
         from_id = str(message.from_id)
         # this creates user if not exists
-        users[from_id] = users.get(from_id, self.get_empty_user(message.sender))
-        users[from_id]["cnt"] += 1
-        self.db.set(__name__, chat_id, users)
+        if message.sender:
+            users[from_id] = users.get(from_id, self.get_empty_user(message.sender))
+            users[from_id]["cnt"] += 1
+            self.db.set(__name__, chat_id, users)
 
     def get_full_name(self, user):
         fn, ln = '', ''
