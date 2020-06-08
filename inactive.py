@@ -1,5 +1,5 @@
 import logging
-
+import telethon
 from .. import loader, utils
 
 logger = logging.getLogger(__name__)
@@ -43,17 +43,24 @@ class InactiveDetectorMod(loader.Module):
         else:
             most = 0
         users_db = self.db.get(__name__, str(chat_id), {})
+        users = {}
 
-        async for user in self.client.iter_participants(chat_id):  # async for :)
+        filt = ~(telethon.tl.alltlobjects.types.ChannelParticipantsBots
+                 | telethon.tl.alltlobjects.types.ChannelParticipantsKicked)
+
+        async for user in self.client.iter_participants(chat_id, filter=filt):
             if str(user.id) not in users_db:
                 users_db[str(user.id)] = self.get_empty_user(user)
+            users[str(user.id)] = users_db[str(user.id)]
+            # We won't include users not CURRENTLY in chat,
+            # but their stats will remain in the database
 
         self.db.set(__name__, str(chat_id), users_db)
 
         def key(x):
             return x[1]['cnt']
 
-        users = sorted(users_db.items(), key=key)
+        users = sorted(users.items(), key=key)
         text = []
         for uid, u in users:
             if u['cnt'] <= most:
