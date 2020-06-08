@@ -70,7 +70,7 @@ class InactiveDetectorMod(loader.Module):
         msg = self.strings('top_header', message).format(un=len(text), mn=most)\
             + self.config['top_delimiter'].join(text)
 
-        await utils.answer(message, msg, parse_mode="md")
+        await utils.answer(message, msg, parse_mode="md", silent=True)
 
     async def watcher(self, message):
         if message.is_private:
