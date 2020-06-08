@@ -89,7 +89,7 @@ class InactiveDetectorMod(loader.Module):
         if message.is_private:
             await utils.answer(message, self.strings('recount_priv', message))
             return
-        limit = message.id
+
         chat_id = message.chat_id
         await utils.answer(message, self.strings('recount_started', message).format(chat_id))
         db = self.db.get(__name__, str(chat_id), {})
@@ -106,7 +106,7 @@ class InactiveDetectorMod(loader.Module):
                                    chat_id, owner, exc_info=True)
         new_db = {}
         n = 0
-        async for msg in self.client.iter_messages(chat_id, limit=limit + 228):
+        async for msg in self.client.iter_messages(chat_id, limit=None):
             if not msg.sender.bot:
                 n += 1
                 from_id = msg.from_id
