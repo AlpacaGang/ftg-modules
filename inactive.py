@@ -35,6 +35,7 @@ class InactiveDetectorMod(loader.Module):
     async def client_ready(self, client, db):
         self.client = client
         self.db = db
+        self.me = await self.client.get_me()
 
     async def inactivecmd(self, message):
         """.inactive <N>"""
@@ -79,7 +80,10 @@ class InactiveDetectorMod(loader.Module):
         msg = self.strings('top_header', message).format(un=len(text), mn=most)\
             + self.config['top_delimiter'].join(text)
 
-        await utils.answer(message, msg, parse_mode="md", silent=True)
+        kw = {}
+        if self.me.id != message.from_id:
+            kw['silent'] = True
+        await utils.answer(message, msg, parse_mode="md", **kw)
 
     async def recountcmd(self, message):
         if message.is_private:
