@@ -45,8 +45,8 @@ class InactiveDetectorMod(loader.Module):
         users_db = self.db.get(__name__, str(chat_id), {})
 
         async for user in self.client.iter_participants(chat_id):  # async for :)
-            if user.id not in users_db:
-                users_db[user.id] = self.get_empty_user(user)
+            if str(user.id) not in users_db:
+                users_db[str(user.id)] = self.get_empty_user(user)
 
         self.db.set(__name__, str(chat_id), users_db)
 
