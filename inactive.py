@@ -11,14 +11,15 @@ class InactiveDetectorMod(loader.Module):
     strings = {
         "name": "Inactivity detector",
         "top_header": "These {un} users wrote {mn} messages or less since joining the group:\n\n",
-        "top_place": "[{name}](tg://user?id={uid}) ({nmsg})",
-        "top_delimiter": ", ",
+        "top_place": "[{name}](tg://user?id={uid}) ({nmsg})",  # FIXME: mentions
+        "top_delimiter": ", ",  # TODO: move to config
         "not_int": "<b>Most messages must be integer</b>"
     }
 
     def __init__(self):
         self.config = loader.ModuleConfig(
-            "default_chat_id", -1001457369532, "Chat ID to get top if command used in PM"
+            "default_chat_id", -1001457369532, "Chat ID to get top if command used in PM",
+            "top_delimiter", ', ', "Separates inactivity top members"
         )
         self.name = self.strings['name']
 
@@ -41,12 +42,18 @@ class InactiveDetectorMod(loader.Module):
                 return
         else:
             most = 0
-        users = self.db.get(__name__, str(chat_id), {})
+        users_db = self.db.get(__name__, str(chat_id), {})
+
+        async for user in self.client.iter_participants(chat_id):  # async for :)
+            if user.id not in users_db:
+                users_db[user.id] = self.get_empty_user(user)
+
+        self.db.set(__name__, str(chat_id), users_db)
 
         def key(x):
             return x[1]['cnt']
 
-        users = sorted(users.items(), key=key)
+        users = sorted(users_db.items(), key=key)
         text = []
         for uid, u in users:
             if u['cnt'] <= most:
@@ -56,7 +63,7 @@ class InactiveDetectorMod(loader.Module):
             else:
                 break
         msg = self.strings('top_header', message).format(un=len(text), mn=most)\
-            + self.strings('top_delimiter', message).join(text)
+            + self.config['top_delimiter'].join(text)
 
         await utils.answer(message, msg, parse_mode="md")
 
@@ -68,9 +75,17 @@ class InactiveDetectorMod(loader.Module):
         users = self.db.get(__name__, chat_id, {})
         from_id = str(message.from_id)
         # this creates user if not exists
-        users[from_id] = users.get(from_id,
-                                   {"cnt": 0,
-                                    "name": message.sender.first_name + ' '
-                                    + message.sender.last_name})
+        users[from_id] = users.get(from_id, self.get_empty_user(message.sender))
         users[from_id]["cnt"] += 1
         self.db.set(__name__, chat_id, users)
+
+    def get_full_name(self, user):
+        fn, ln = '', ''
+        if user.first_name:
+            fn = user.first_name
+        if user.last_name:  # Can be None, then we get an exception
+            ln = user.last_name
+        return (fn + ' ' + ln).strip()
+
+    def get_empty_user(self, user):
+        return {"cnt": 0, "name": self.get_full_name(user)}
