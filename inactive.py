@@ -1,5 +1,5 @@
 import logging
-import telethon
+# import telethon
 from .. import loader, utils
 
 logger = logging.getLogger(__name__)
@@ -45,12 +45,11 @@ class InactiveDetectorMod(loader.Module):
         users_db = self.db.get(__name__, str(chat_id), {})
         users = {}
 
-        filt = ~(telethon.tl.alltlobjects.types.ChannelParticipantsBots())
-
-        async for user in self.client.iter_participants(chat_id, filter=filt):
-            if str(user.id) not in users_db:
-                users_db[str(user.id)] = self.get_empty_user(user)
-            users[str(user.id)] = users_db[str(user.id)]
+        async for user in self.client.iter_participants(chat_id):
+            if not user.is_bot:
+                if str(user.id) not in users_db:
+                    users_db[str(user.id)] = self.get_empty_user(user)
+                users[str(user.id)] = users_db[str(user.id)]
             # We won't include users not CURRENTLY in chat,
             # but their stats will remain in the database
 
