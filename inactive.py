@@ -45,8 +45,8 @@ class InactiveDetectorMod(loader.Module):
         users_db = self.db.get(__name__, str(chat_id), {})
         users = {}
 
-        filt = ~(telethon.tl.alltlobjects.types.ChannelParticipantsBots
-                 | telethon.tl.alltlobjects.types.ChannelParticipantsKicked)
+        filt = ~(telethon.tl.alltlobjects.types.ChannelParticipantsBots()
+                 | telethon.tl.alltlobjects.types.ChannelParticipantsKicked())
 
         async for user in self.client.iter_participants(chat_id, filter=filt):
             if str(user.id) not in users_db:
