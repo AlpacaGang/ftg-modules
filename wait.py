@@ -73,11 +73,16 @@ class WAITMod(loader.Module):
 
                         ff = x * 60
 
+                        llst = x
                         while time.time() - dd < ff:
-                            now = "Через " + str(round((ff - round(time.time() - dd)) / 60)) + " минут это сообщение удалится"
-                            if now != lst:
-                                await utils.answer(message, now)
-                            lst = now
+                            oo = round((ff - round(time.time() - dd)) / 60)
+                            nw = oo
+                            if nw == llst:
+                                await asyncio.sleep(0.1)
+                                continue
+                            now = "Через " + str(nw) + " минут это сообщение удалится"
+                            await utils.answer(message, now)
+                            llst = nw
                         await message.delete()
                     else:
                         await utils.answer(message, "Вы указали не число!")
