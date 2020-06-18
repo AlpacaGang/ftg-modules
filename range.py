@@ -1,8 +1,9 @@
 # encoding: utf-8
-from .. import loader, utils
-
 import asyncio
+import time
 import logging
+
+from .. import loader, utils
 logger = logging.getLogger(__name__)
 
 
@@ -14,7 +15,7 @@ def register(cb):
 class RangeMod(loader.Module):
     """Provides numbers as in Python range with delay"""
     strings = {
-        "name": "Range", 
+        "name": "Range",
         "no_args": "<b>Not enough args (minimum {})</b>",
         "delay_num": "<b>Delay must be a number</b>",
         "args_int": "<b>All range args must be integers</b>",
@@ -27,7 +28,7 @@ class RangeMod(loader.Module):
             "default_delay", 1.0, "Delay in all commands by default"
         )
         self.name = self.strings['name']
-    
+
     def config_complete(self):
         self.name = self.strings['name']
 
@@ -35,8 +36,10 @@ class RangeMod(loader.Module):
         """for internal usage; do range itself"""
         await message.delete()
         for now in range(*range_args):
+            before = time.time()
             await message.respond(self.config['msg_format'].format(now))
-            await asyncio.sleep(delay)
+            delta = time.time() - before
+            await asyncio.sleep(max(delay - delta, 0))
 
     async def _get_args(self, message, minn, maxn):
         args = utils.get_args(message)
@@ -59,25 +62,27 @@ class RangeMod(loader.Module):
             logger.warning(f'Impossible to convert all range args to int ({range_args})')
             await utils.answer(message, self.strings['args_int'])
             return None
-    
+
     async def rangecmd(self, message):
-        """Iterates over the given range and returns each number in separate message.\nUsage: .range <python_range_args>"""
+        """Iterates over the given range and returns each number in separate message.
+        Usage: .range <python_range_args>"""
         args = await self._get_args(message, 1, 3)
         if args is None:
-            return # user done sth wrong
+            return  # user done sth wrong
 
         delay = self.config['default_delay']
         range_args = await self._check_range_args(args, message)
         if range_args is None:
-            return # user done sth wrong
+            return  # user done sth wrong
 
         await self._do_range(range_args, delay, message)
 
     async def drangecmd(self, message):
-        """Iterates over the given range and returns each number in separate message.\nUsage: .drange <delay> <python_range_args>"""
+        """Iterates over the given range and returns each number in separate message.
+        Usage: .drange <delay> <python_range_args>"""
         args = await self._get_args(message, 2, 4)
         if args is None:
-            return # user done sth wrong
+            return  # user done sth wrong
 
         try:
             delay = float(args[0])
@@ -85,7 +90,7 @@ class RangeMod(loader.Module):
             logger.warning(f'Impossible to convert delay to float ({args[0]})')
             await utils.answer(message, self.strings['delay_num'])
             return
-        
+
         range_args = await self._check_range_args(args[1:], message)
         if range_args is None:
             return
@@ -97,7 +102,7 @@ class RangeMod(loader.Module):
         args = await self._get_args(message, 1, 2)
         if args is None:
             return
-        
+
         if len(args) == 1:
             delay = self.config['default_delay']
             range_args = (1, args[0], 1)
@@ -109,12 +114,12 @@ class RangeMod(loader.Module):
                 await utils.answer(message, self.strings['delay_num'])
                 return
             range_args = (1, args[1], 1)
-        
+
         range_args = await self._check_range_args(range_args, message)
         if range_args is None:
             return
-        range_args[1] += 1 # so last number we print will be N itself
-        
+        range_args[1] += 1  # so last number we print will be N itself
+
         await self._do_range(range_args, delay, message)
 
     async def rcountcmd(self, message):
@@ -122,7 +127,7 @@ class RangeMod(loader.Module):
         args = await self._get_args(message, 1, 2)
         if args is None:
             return
-        
+
         if len(args) == 1:
             delay = self.config['default_delay']
             range_args = (args[0], 0, -1)
@@ -134,11 +139,9 @@ class RangeMod(loader.Module):
                 await utils.answer(message, self.strings['delay_num'])
                 return
             range_args = (args[1], 0, -1)
-        
+
         range_args = await self._check_range_args(range_args, message)
         if range_args is None:
             return
-        
+
         await self._do_range(range_args, delay, message)
-
-
