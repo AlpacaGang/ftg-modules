@@ -34,7 +34,7 @@ class WAITMod(loader.Module):
         await message.delete()
 
     async def waitcmd(self, message):
-        """Эта команда удаляет сообхение через n секунд, \nписать нужно так: .wait <n>, если хотите секунды\nи так .wait <n>s, если хотите ждать м винутах (например .wait 5m)"""
+        """Эта команда удаляет сообхение через n секунд, \nписать нужно так: .wait <n>, если хотите секунды\nи так .wait <n>s, если хотите ждать в минутах\n(например .wait 5m)"""
         args = utils.get_args(message)
         if not args or len(args) > 1:
             await utils.answer(message, "Вы не указали число секунд или указали несколько параметров")
