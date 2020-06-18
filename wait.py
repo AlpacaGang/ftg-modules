@@ -40,22 +40,47 @@ class WAITMod(loader.Module):
             await utils.answer(message, "Вы не указали число секунд или указали несколько параметров")
         else:
             try:
+                g = -1
+                h = ""
                 try:
-                    g = int(args[0])
+                    g = int(args[0][:len(args[0])])
                 except:
-                    await utils.answer(message, "Вы указали не число!")
-                x = int(args[0])
-                lst = "Через " + str(x) + " секунд это сообщение удалится"
-                await utils.answer(message, lst)
+                    try:
+                        g = int(args[0][:len(args[0]) - 1])
+                        h = args[0][len(args[0]) - 1]
+                    except:
+                        await utils.answer(message, "Вы указали не число!")
+                if g > 0:
+                    if h == 's' or h == '':
+                        x = g
+                        lst = "Через " + str(x) + " секунд это сообщение удалится"
+                        await utils.answer(message, lst)
 
-                dd = time.time()
+                        dd = time.time()
 
-                while time.time() - dd < x:
-                    now = "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится"
-                    if now != lst:
-                        await utils.answer(message, now)
-                    lst = now
-                await message.delete()
+                        while time.time() - dd < x:
+                            now = "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится"
+                            if now != lst:
+                                await utils.answer(message, now)
+                            lst = now
+                        await message.delete()
+                    elif h == 'm':
+                        x = g
+                        lst = "Через " + str(x) + " минут это сообщение удалится"
+                        await utils.answer(message, lst)
+
+                        dd = time.time()
+
+                        ff = x * 60
+
+                        while time.time() - dd < ff:
+                            now = "Через " + str(round((ff - round(time.time() - dd)) / 60)) + " минут это сообщение удалится"
+                            if now != lst:
+                                await utils.answer(message, now)
+                            lst = now
+                        await message.delete()
+                    else:
+                        await utils.answer(message, "Вы указали не число!")
             except:
                 await utils.answer(message, "Упс, ошибочка вышла! Напшите @gerasikoff, он вам поможет")
 
