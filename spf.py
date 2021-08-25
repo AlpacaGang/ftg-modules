@@ -16,7 +16,7 @@ def register(cb):
 @loader.tds
 class SPFMod(loader.Module):
     """Этот модуль геи личку ваших друзей"""
-    strings = {"name": "ЖУЖАКА НАХУЙ"}
+    strings = {"name": "ЖУЖАКA НАХУЙ"}
 
     def __init__(self):
         self.name = self.strings["name"]
